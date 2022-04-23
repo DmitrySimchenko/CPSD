@@ -2,7 +2,7 @@
  которая получает погоду в данный момент для города, название которого получается через input.
   https://openweathermap.org/current
 """
-# 0adda7fdf5eb900f94503b2945ec3343 token - получаю после регистрации на сайтеpip
+# 0adda7fdf5eb900f94503b2945ec3343 token - получаю после регистрации на сайте
 
 # https://api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
 
