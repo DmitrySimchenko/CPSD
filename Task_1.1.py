@@ -20,7 +20,7 @@ with open('data.json', 'w') as f:
     json.dump(r.json(), f)
 
 
-# выводим список репозиториев
+# выводим список репозиториев;
 print(f'Репозитории {username}: ')
 for i in r.json():
     print(i['name'])
