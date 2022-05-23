@@ -23,21 +23,23 @@ link = 'https://hh.ru/search/vacancy'
 headers = {'user-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
                          ' AppleWebKit/537.36 (KHTML, like Gecko)'
                          ' Chrome/101.0.4951.67 Safari/537.36'}
+vacancy_database = []
 
 
 def _parse_hh(vacancy):
     vacancy_date = []
     page = 0
     max_page = 39
-    params = {
-        'text': 'vacancy',
-        'search_field': 'name',
-        'page': page}
-    html = requests.get(link, params=params, headers=headers)
-    soup = bs(html.text, 'html.parser')
-    vacancies = soup.find_all('div', {'class': 'vacancy-serp-item'})
+
     while page <= max_page:
-        for vacancy in vacancies:
+        params = {
+            'text': vacancy,
+            'search_field': 'name',
+            'page': page}
+        html = requests.get(link, params=params, headers=headers)
+        soup = bs(html.text, 'html.parser')
+        vacancies = soup.find_all('div', {'class': 'vacancy-serp-item'})
+        for i in vacancies:
             vacancy_info = {}
 
             # название вакансии
@@ -84,12 +86,10 @@ def _parse_hh(vacancy):
     return vacancy_date
 
 
-def parse_vacancy(vacancy_date):
-
-    vacancy_date.extend(_parse_hh(vacancy))
-    df = pd.DataFrame(vacancy_date)
-    return df
-    print(df.head)
+vacancy_database.extend(_parse_hh(vacancy))
 
 with open('data.json', 'w') as f:
-    json.dump(vacancy_date.json(), f)
+    json.dump(vacancy_database.json(), f)
+
+df = pd.DataFrame(vacancy)
+print(df)
