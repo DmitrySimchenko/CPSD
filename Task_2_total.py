@@ -13,7 +13,7 @@
 
 import requests
 import re
-import pandas as pd
+import pprint
 from bs4 import BeautifulSoup as bs
 import json
 
