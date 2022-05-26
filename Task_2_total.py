@@ -13,7 +13,7 @@
 
 import requests
 import re
-import pprint
+from pprint import pprint
 from bs4 import BeautifulSoup as bs
 import json
 
@@ -48,6 +48,7 @@ def _parse_hh(vacancy):
 
             # заработная плата
             salary = i.find('span', {'data-qa': 'vacancy-serp__vacancy-compensation'})
+            s = []
             if not salary:
                 salary_min = None
                 salary_max = None
@@ -63,6 +64,11 @@ def _parse_hh(vacancy):
                 elif salary[0] == 'от':
                     salary_min = int(salary[1])
                     salary_max = None
+                elif salary[1] == "":
+                    s = salary[2].split(' ', 2)
+                    salary_min = int(salary[1])
+                    salary_max = int(s[1])
+                    salary[2] = s[2]
                 else:
                     salary_min = int(salary[0])
                     salary_max = int(salary[1])
@@ -87,7 +93,8 @@ def _parse_hh(vacancy):
 
 vacancy_database.extend(_parse_hh(vacancy))
 
-with open('data.json', 'w') as f:
-    json.dump(vacancy_database.json(), f)
+with open('vacancy_database.txt', 'w') as f:
+    json.dump(vacancy_database, f)
+
 
 pprint(vacancy_database)
