@@ -103,10 +103,6 @@ def _parse_hh(vacancy):
 
 vacancy_database.extend(_parse_hh(vacancy))
 
-"""with open('vacancy_database.txt', 'w') as f:
-    json.dump(vacancy_database, f)
-"""
-
 
 def find_salary():
     salary = input('Введите минимальную зарплату: ')
