@@ -21,7 +21,7 @@ headers = {'user-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
                          ' Chrome/101.0.4951.67 Safari/537.36'}
 link = 'https://lenta.ru/'
 
-response = requests.get(link)
+response = requests.get(link, headers=headers)
 
 dom = html.fromstring(response.text)
 items = dom.xpath("//a[contains(@class, '_topnews')]")  # все основные новости
