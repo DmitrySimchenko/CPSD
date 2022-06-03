@@ -11,13 +11,12 @@
 import requests
 import re
 from pprint import pprint
+
 from bs4 import BeautifulSoup as bs
 import json
-
 from pymongo import MongoClient
 
-
-with open(vacancy_database.json') as f:
+with open('vacancy_database.json') as f:
     vacancy_database_mongo = json.load(f)  # открываю сохраненную базу вакансий
 
 client = MongoClient('127.0.0.1', 27017)  # подключаюсь к mongo
@@ -93,7 +92,7 @@ def _parse_hh(vacancy):
             vacancy_info['site'] = 'hh.ru'
 
             # вставляем новую вакансию в первоначальную базу данных после проверки до "?"
-            if vacancy_info['vacancy_link'] != vac['vacancy_link']:  # проверяю вакансию на совпадение урлов
+            if not vac.find_one({'vacancy_link': vacancy_info['vacancy_link']}):  # проверяю вакансию на совпадение
                 vac.insert_one(vacancy_info)  # при отсутствии совпадений добавляю вакансию в базу
 
         page += 1
@@ -102,10 +101,6 @@ def _parse_hh(vacancy):
 
 
 vacancy_database.extend(_parse_hh(vacancy))
-
-"""with open('vacancy_database.txt', 'w') as f:
-    json.dump(vacancy_database, f)
-"""
 
 
 def find_salary():
